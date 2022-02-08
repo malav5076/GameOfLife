@@ -1,5 +1,5 @@
-rowLength=7;
-columnLength=7;
+const rowLength=7;
+const columnLength=7;
 wantToStop=false;
 grid=new Array(rowLength);
 for(i=0;i<rowLength;i++){
@@ -43,14 +43,17 @@ function stopProcess(){
     wantToStop=true;
     
 }
+
+function updateGeneration(){
+    for(index1=0;index1<rowLength;index1++){
+        for(index2=0;index2<columnLength;index2++){
+            grid[index1][index2]=nextGenGrid[index1][index2];
+        }
+    }
+}
 function start(){
     if(wantToStop) return;
     else{
-        for(index1=0;index1<rowLength;index1++){
-            for(index2=0;index2<columnLength;index2++){
-                grid[index1][index2]=nextGenGrid[index1][index2];
-            }
-        }
         for(index1=0;index1<rowLength;index1++){
             for(index2=0;index2<columnLength;index2++){
                 if(grid[index1][index2]==1&&countNeighbours(index1,index2)<2){
@@ -63,8 +66,7 @@ function start(){
                     nextGenGrid[index1][index2]=0;
         
                 }
-                else if(grid[index1][index2]==1&&(countNeighbours(index1,index2)==2||countNeighbours(index1,index2)==3)){                    
-                     if(countNeighbours(index1,index2+1)==3) {
+                else if(grid[index1][index2]==1&&(countNeighbours(index1,index2)==2||countNeighbours(index1,index2)==3)){                    if(countNeighbours(index1,index2+1)==3) {
                         cellStore[index1][index2+1].style.backgroundColor="purple";
                         nextGenGrid[index1][index2+1]=1;
                     }  
@@ -99,6 +101,7 @@ function start(){
                 }
             }
         }
+    updateGeneration();
     setTimeout(start,1000);
     }
 }    
